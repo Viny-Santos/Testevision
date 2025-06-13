@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agendamento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./chat.css">
+</head>
+<body>
+  <div class="chat" id="chat">
+    <div class="bot">Olá! Bem-vindo à nossa barbearia. Qual o seu nome?</div>
+  </div>
+  <div id="inputSection">
+    <input type="text" id="userInput" placeholder="Digite aqui..." />
+    <button class="send-btn" onclick="handleUserInput()">Enviar</button>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const servicoSelecionado = urlParams.get("servico") || "[serviço não especificado]";
+
+    const chat = document.getElementById("chat");
+    const input = document.getElementById("userInput");
+    const inputSection = document.getElementById("inputSection");
+
+    let etapa = 1;
+    let nome = "";
+    let telefone = "";
+
+    function criarMensagemUser(texto) {
+      const div = document.createElement("div");
+      div.className = "user";
+      div.textContent = texto;
+      return div;
+    }
+
+    function criarMensagemBot(texto) {
+      const div = document.createElement("div");
+      div.className = "bot";
+      div.textContent = texto;
+      return div;
+    }
+
+    function handleUserInput() {
+      const valor = input.value.trim();
+      if (!valor) return;
+
+      chat.appendChild(criarMensagemUser(valor));
+
+      if (etapa === 1) {
+        nome = valor;
+        chat.appendChild(criarMensagemBot(`Obrigado, ${nome}! Agora, informe seu número de celular:`));
+        etapa++;
+      } else if (etapa === 2) {
+        telefone = valor;
+        chat.appendChild(criarMensagemBot(`Perfeito! Você escolheu o serviço: ${servicoSelecionado}`));
+        chat.appendChild(criarMensagemBot("Certo, e qual o melhor dia e horário para você ser atendido?"));
+
+      inputSection.style.display = "none";// esconde o input
+
+        setTimeout(() => {
+          chat.appendChild(criarMensagemBot("SELECIONE O DIA E HORÁRIO:"));
+          chat.appendChild(dateSelector);
+          chat.appendChild(timeSelector);
+          chat.appendChild(confirmationText);
+          chat.appendChild(sendBtn);
+        }, 500);
+
+        etapa++;
+      }
+      input.value = "";
+    }
+
+    // Componentes do seletor de dia e horário
+    const dateSelector = document.createElement("div");
+    dateSelector.className = "date-selector";
+    dateSelector.id = "dateSelector";
+
+    const timeSelector = document.createElement("div");
+    timeSelector.className = "time-selector";
+    timeSelector.id = "timeSelector";
+
+    const confirmationText = document.createElement("div");
+    confirmationText.className = "confirmation";
+    confirmationText.id = "confirmationText";
+    confirmationText.textContent = "--";
+
+    const sendBtn = document.createElement("button");
+    sendBtn.className = "send-btn";
+    sendBtn.textContent = "Confirmar";
+
+    // Geração de dias
+    const days = 7;
+    const diasSemana = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
+    const hoje = new Date();
+
+    for (let i = 0; i < days; i++) {
+      const dia = new Date();
+      dia.setDate(hoje.getDate() + i);
+      const div = document.createElement("div");
+      div.classList.add("day");
+      div.dataset.date = dia.toISOString();
+      div.innerHTML = `
+        <div>${diasSemana[dia.getDay()]}</div>
+        <strong>${dia.getDate()}</strong>
+        <div>${dia.toLocaleString('default', { month: 'short' }).toUpperCase()}</div>
+      `;
+      div.onclick = () => {
+        document.querySelectorAll(".day").forEach(d => d.classList.remove("selected"));
+        div.classList.add("selected");
+        updateConfirmation();
+      };
+      if (i === 0) div.classList.add("selected");
+      dateSelector.appendChild(div);
+    }
+
+    ["13:00", "14:00", "15:00"].forEach(hora => {
+      const div = document.createElement("div");
+      div.className = "time";
+      div.textContent = hora;
+      div.onclick = () => {
+        document.querySelectorAll(".time").forEach(t => t.classList.remove("selected"));
+        div.classList.add("selected");
+        updateConfirmation();
+      };
+      timeSelector.appendChild(div);
+    });
+
+    function updateConfirmation() {
+      const dateEl = document.querySelector(".day.selected");
+      const timeEl = document.querySelector(".time.selected");
+      if (dateEl && timeEl) {
+        const date = new Date(dateEl.dataset.date);
+        confirmationText.textContent = `${date.toLocaleDateString("pt-BR", { weekday: 'short', day: 'numeric', month: 'long' })} às ${timeEl.textContent}`;
+      }
+    }
+  </script>
+</body>
+</html>

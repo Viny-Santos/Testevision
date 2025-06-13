@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+  />
+  <title>Barbearia - Serviços</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="cabecalho">
+    <a href="#" class="buton-home">
+      <img src="./butons/home.png" class="buton-img" alt="Início" />
+    </a>
+  </header>
+
+  <section class="logo-principal">
+    <img class="logo-img" alt="logo" src="./img/logo.svg" />
+  </section>
+
+  <section class="banner">
+    <img src="./img/promo.png" class="promocao" alt="Banner promocional" />
+  </section>
+
+  <section class="carrosel">
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="produto swiper-slide">
+          <img src="./carrosel-img/corte.png.png" onclick="abrirChat('Tranças')" class="produto-img" alt="Corte de cabelo" />
+          <div class="produto-preco">
+            <p class="preco">R$ 35,00</p>
+            <p class="min">30 Min <img src="./butons/relogio.svg" class="relogio-img" alt="Tempo" /></p>
+          </div>
+        </div>
+        <div class="produto swiper-slide">
+          <img src="./carrosel-img/corte.png.png" onclick="abrirChat('Corte')" class="produto-img" alt="Corte de cabelo" />
+          <div class="produto-preco">
+            <p class="preco">R$ 35,00</p>
+            <p class="min">30 Min <img src="./butons/relogio.svg" class="relogio-img" alt="Tempo" /></p>
+          </div>
+        </div>
+        <div class="produto swiper-slide">
+          <img src="./carrosel-img/corte.png.png" onclick="abrirChat('Corte')" class="produto-img" alt="Corte de cabelo" />
+          <div class="produto-preco">
+            <p class="preco">R$ 35,00</p>
+            <p class="min">30 Min <img src="./butons/relogio.svg" class="relogio-img" alt="Tempo" /></p>
+          </div>
+        </div>
+        <div class="produto swiper-slide">
+          <img src="./carrosel-img/corte.png.png" onclick="abrirChat('Corte')" class="produto-img" alt="Corte de cabelo" />
+          <div class="produto-preco">
+            <p class="preco">R$ 35,00</p>
+            <p class="min">30 Min <img src="./butons/relogio.svg" class="relogio-img" alt="Tempo" /></p>
+          </div>
+        </div>
+        <div class="produto swiper-slide">
+          <img src="./carrosel-img/corte.png.png" onclick="abrirChat('Corte')" class="produto-img" alt="Corte de cabelo" />
+          <div class="produto-preco">
+            <p class="preco">R$ 35,00</p>
+            <p class="min">30 Min <img src="./butons/relogio.svg" class="relogio-img" alt="Tempo" /></p>
+          </div>
+        </div>
+        <div class="produto swiper-slide">
+          <img src="./carrosel-img/corte.png.png" onclick="abrirChat('Corte')" class="produto-img" alt="Corte de cabelo" />
+          <div class="produto-preco">
+            <p class="preco">R$ 35,00</p>
+            <p class="min">30 Min <img src="./butons/relogio.svg" class="relogio-img" alt="Tempo" /></p>
+          </div>
+        </div>
+        <div class="produto swiper-slide">
+          <img src="./carrosel-img/corte.png.png" onclick="abrirChat('Corte')" class="produto-img" alt="Corte de cabelo" />
+          <div class="produto-preco">
+            <p class="preco">R$ 35,00</p>
+            <p class="min">30 Min <img src="./butons/relogio.svg" class="relogio-img" alt="Tempo" /></p>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
+
+  <section class="arraste">
+    <p class="aviso">Arraste para o lado para ver mais</p>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper(".swiper", {
+      spaceBetween: 10,
+      slidesPerView: "auto",
+      pagination: {
+        el: ".swiper-pagination",
+        type: "bullets",
+      },
+    });
+
+    function abrirChat(servico) {
+      const url = `chat.html?servico=${encodeURIComponent(servico)}`;
+      window.location.href = url;
+    }
+
+  </script>
+</body>
+</html>
